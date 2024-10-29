@@ -1,7 +1,8 @@
 window.onload = () =>{
     document.getElementById("td",introducirColor());
-    
+
 }
+let td = document.querySelectorAll("td")
 function generarColor(){
     let rojo = Math.trunc(Math.random() * (255));
     let verde = Math.trunc(Math.random() * (255));
@@ -10,6 +11,12 @@ function generarColor(){
     return "rgb" + color
 }
 function introducirColor(){
-    let td = document.querySelectorAll("td")
     td.forEach(td => {td.style.backgroundColor = generarColor()})
+}
+function casillaAleatoria(){
+    let aleatorio = Math.trunc(Math.random() * 6);
+    return aleatorio
+}
+function colorGanador(){
+    let casilla = td[]
 }
