@@ -9,6 +9,11 @@ let btn = document.getElementsByTagName("button");
 let i = btn[4];
 i = btn[i].addEventListener("click",numero(i))
 
+function cambiar(){
+    btn[i] = btn[4] 
+}
+
+
 function numero(i){
     document.getElementById("mostrarNum").innerHTML=btn[i].innerHTML="4";
 }
