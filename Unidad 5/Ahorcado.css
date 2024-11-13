@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #b4e391;
+}
+
+.contenedor {
+    text-align: center;
+    width: 300px;
+    color: #fff;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0.5em 0;
+}
+
+.subtitulo {
+    font-size: 1em;
+    color: #f4f4f4;
+}
+
+#alfabeto button {
+    background-color: #fff;
+    color: #333;
+    border: none;
+    padding: 8px;
+    margin: 2px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#alfabeto button.desactivado {
+    background-color: #ddd;
+    color: #aaa;
+    cursor: default;
+}
+
+#contenedor-palabra {
+    font-size: 1.5em;
+    margin: 20px 0;
+}
+
+button {
+    padding: 8px 16px;
+    margin-top: 10px;
+    font-size: 1em;
+    cursor: pointer;
+}
