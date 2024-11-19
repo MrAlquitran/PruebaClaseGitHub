@@ -1,59 +1,72 @@
-window.onload = () =>{
+let bolas = [];
+let svgNS = "http://www.w3.org/2000/svg";
+
+window.onload = () => {
     
-    for (let i = 0; i < 10; i++) {
-        bola.push(new bolas("juego",getRandomInt(300),getRandomInt(300),getRandomInt(20)))
-        setInterval(()=>{
-            
-        })
+    for (let i = 0; i < 1000; i++) {
+        bolas.push(new Bola("juego", getRandomInt(300), getRandomInt(300), getRandomInt(20, 50), getRandomInt(-5, 5), getRandomInt(-5, 5), 1152, 864));
     }
 
-        for (let i = 0; i < 10; i++) {
-            setInterval(() => {
-                posicionX = posicionX + velocidadX;
-                posicionY = posicionY + velocidadY;
-                bola.setAttribute("cx",posicionX);
-                bola.setAttribute("cy",posicionY);
-                if((posicionX+r)>limiteX){
-                    velocidadX *=-1;
-                } else if((posicionX-r)<0){
-                    velocidadX *=-1;
-                }
-                
-                if((posicionY+r)>limiteY){
-                    velocidadY *=-1;
-                } else if((posicionY-r)<0){
-                    velocidadY *=-1;
-                }
-                i++
-            }, 30);
+    setInterval(() => {
+        bolas.forEach(bola => bola.mover());
+    }, 30); 
+}
+
+class Bola {
+    constructor(svgPadre, x = 50, y = 50, radio = 50, velX = 125, velY = 105, tamanoX = 1152, tamanoY = 864) {
+        this.posicionX = x;
+        this.posicionY = y;
+        this.r = radio;
+        this.velocidadX = velX;
+        this.velocidadY = velY;
+        this.limiteX = tamanoX;
+        this.limiteY = tamanoY;
+        this.elemento = this.crearTag(svgPadre);
+        this.elemento.addEventListener('click', () => this.eliminar());
+    }
+
+    crearTag(svgPadre) {
+        let bola = document.createElementNS(svgNS, "circle");
+        bola.setAttribute("cx", this.posicionX);
+        bola.setAttribute("cy", this.posicionY);
+        bola.setAttribute("r", this.r);
+        bola.setAttribute("fill", this.random_rgba());
+        document.getElementById(svgPadre).appendChild(bola);
+        return bola;
+    }
+
+    mover() {
+        this.posicionX += this.velocidadX;
+        this.posicionY += this.velocidadY;
+
+        if (this.posicionX - this.r <= 0 || this.posicionX + this.r >= this.limiteX) {
+            this.velocidadX *= -1;
+        }
+        if (this.posicionY - this.r <= 0 || this.posicionY + this.r >= this.limiteY) {
+            this.velocidadY *= -1;
         }
 
-
-}
-
-let bola = document.getElementsByTagName("circle");
-let posicionX = 50;
-let posicionY = 50;
-let limiteX = 1000;
-let limiteY = 1000;
-let r = 50;
-let velocidadX = 125;
-let velocidadY = 105;
-
-class bolas{
-    constructor(svgPadre,x,y,velX,velY,tamanoX,tamanoY){
-        posicionX = x;
-        posicionY = y;
-        velocidadX = velX;
-        velocidadY = velY;
-        limiteX = tamanoX;
-        limiteY = tamanoY;
+        this.actualizarPosicion();
     }
-    crearTag(svgPadre){
-        this.bola = document.createElementNS("http://www.w3.org/2000/svg","circle");
-        this.bola.setAttribute("cx",this.posicionX)
+    actualizarPosicion() {
+        this.elemento.setAttribute("cx", this.posicionX);
+        this.elemento.setAttribute("cy", this.posicionY);
+    }
+
+    eliminar() {
+        this.elemento.remove();
+        let index = bolas.indexOf(this);
+        if (index > -1) {
+            bolas.splice(index, 1);
+        }
+    }
+
+    random_rgba() {
+        let o = Math.round, r = Math.random, s = 255;
+        return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
     }
 }
 
-    
-    
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
