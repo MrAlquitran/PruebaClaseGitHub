@@ -1,0 +1,13 @@
+.elecciones{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+#piechart{
+    width: 500px;
+    height: 500px;
+}
+#chart_div{
+    width: 60%;
+    height: 100%;
+}

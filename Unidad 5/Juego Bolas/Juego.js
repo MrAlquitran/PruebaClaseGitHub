@@ -4,12 +4,12 @@ let svgNS = "http://www.w3.org/2000/svg";
 window.onload = () => {
     
     for (let i = 0; i < 1000; i++) {
-        bolas.push(new Bola("juego", getRandomInt(300), getRandomInt(300), getRandomInt(20, 50), getRandomInt(-5, 5), getRandomInt(-5, 5), 1152, 864));
+        bolas.push(new Bola("juego", getRandomInt(300), getRandomInt(300), getRandomInt(40, 50), getRandomInt(-5, 5), getRandomInt(-5, 5), 1152, 864));
     }
 
     setInterval(() => {
         bolas.forEach(bola => bola.mover());
-    }, 30); 
+    }, 1000/60); 
 }
 
 class Bola {
@@ -22,7 +22,7 @@ class Bola {
         this.limiteX = tamanoX;
         this.limiteY = tamanoY;
         this.elemento = this.crearTag(svgPadre);
-        this.elemento.addEventListener('click', () => this.eliminar());
+        this.elemento.addEventListener('mouseover', () => this.eliminar());
     }
 
     crearTag(svgPadre) {
