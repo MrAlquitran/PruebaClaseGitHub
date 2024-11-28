@@ -8,7 +8,6 @@ function peticionAJAX(){
           console.log(this.responseText);
           respuesta = JSON.parse(this.responseText);
           document.getElementById("titulo").innerHTML = "HE RECIBIDO "+ respuesta.usuarios.length
-          let lista = document.createElement("li");
             
           for(usuario of respuesta.usuarios){
             crearlista();
@@ -27,3 +26,12 @@ function crearlista(objeto){
         document.getElementById("añadir").appendChild(lista);
     });
 }
+
+// function peticionAJAXmoderna(){
+//   fetch("/usuarios",{method: "GET"})
+//   .then((res) => res.json())
+//   .then((datosRecibidos)=>{
+//     document.getElementById("titulo").innerHTML = "He recibido "+ datosRecibidos.usuarios
+//     console.log(datosRecibidos)
+//   }).catch((err)=> console.error("error",err));
+// }
