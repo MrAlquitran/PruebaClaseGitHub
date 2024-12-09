@@ -15,7 +15,7 @@ let paginanueva = 1;
 let peticion = false;
 
 window.onload = () => {
-  document.getElementById("btn").addEventListener("click", peticionAJAXmoderna);
+  document.getElementById("btn").addEventListener("click", cargaInicial);
 
   window.addEventListener('scroll', () => {
     let posicionScroll = window.scrollY; 
@@ -30,7 +30,7 @@ window.onload = () => {
   });
 };
 
-function peticionAJAXmoderna() {
+function cargaInicial() {
   let peliculaBuscar = document.getElementById("buscar").value;
   fetch("http://www.omdbapi.com/?apikey=baa35bb8&s="+peliculaBuscar,{ method: "GET" })
     .then((res) => res.json())
@@ -44,6 +44,7 @@ function peticionAJAXmoderna() {
 
         let imagen = document.createElement("img");
         imagen.src = pelicula.Poster;
+        imagen.addEventListener("click", () => info(pelicula.imdbID));
         li.appendChild(imagen);
 
         milista.appendChild(li);
@@ -58,6 +59,10 @@ function cargarMas() {
     peticion = true; 
     paginanueva++;
     let peliculaBuscar = document.getElementById("buscar").value;
+    
+    document.getElementById("Cargando").classList.remove("null");
+    document.getElementById("Cargando").classList.add("visible");
+    
     fetch("http://www.omdbapi.com/?apikey=baa35bb8&s="+peliculaBuscar+"&page="+paginanueva,{ method: "GET" })
       .then((res) => res.json())
       .then((datosRecibidos) => {
@@ -69,6 +74,7 @@ function cargarMas() {
 
           let imagen = document.createElement("img");
           imagen.src = pelicula.Poster;
+          imagen.addEventListener("click", () => info(pelicula.imdbID));
           li.appendChild(imagen);
 
           milista.appendChild(li);
@@ -79,17 +85,29 @@ function cargarMas() {
       })
       .catch((err) => {
         console.error("error", err);
-        peticion = false; 
+      })
+      .finally(() => {
+        peticion = false;
+        document.getElementById("Cargando").classList.remove("visible");
+        document.getElementById("Cargando").classList.add("null");
       });
   }
 }
     
 
+function info(idPelicula){
+  document.querySelector(".detalles").style.display = "block";
+  fetch("http://www.omdbapi.com/?apikey=baa35bb8&s="+idPelicula,{ method: "GET" })
+      .then((res) => res.json())
+      .then((datosRecibidos) => {
+        document.getElementById("imagen").src = datosRecibidos.Poster;
+        document.getElementById("titulo").textContent = datosRecibidos.Title;
+        document.getElementById("año").textContent = datosRecibidos.Year;
+        document.getElementById("actores").textContent = datosRecibidos.Actors;
+        document.getElementById("sinopsis").textContent = datosRecibidos.Plot;
 
-
-// img.idpeli = pelicula.imdbID;
-// function info(e){
-//   e.target.idPelicula;
-//   url = "http://www.omdbapi.com/?apikey=baa35bb8&s="+idpeli;
-// }
-// var peticion = false;
+})
+.finally(() => {
+  document.getElementById("Cargando").classList.add("null"); 
+});
+}
