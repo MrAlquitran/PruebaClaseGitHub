@@ -1,0 +1,17 @@
+.producto {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.producto img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+#Cargando {
+    display: none;
+    color: #666;
+}
+#Cargando.visible {
+    display: block;
+}
