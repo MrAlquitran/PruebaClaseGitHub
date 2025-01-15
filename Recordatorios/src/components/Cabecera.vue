@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 let textoinput = "";
 function nuevaNota() {
     emit('nota-creada', textoinput);

@@ -6,16 +6,15 @@ import tarea from './components/tarea.vue';
 import resumenTareas from './components/resumenTareas.vue';
 import Login from './components/Login.vue';
 //VARIABLE DE FIREBASE.JS ES EL DB, "RECORDATORIOS"
-import { Recordatorios } from './firebase';
+import { collection } from 'firebase/firestore'
 
-import { collection, addDoc, query, orderBy } from 'firebase/firestore';
+import { addDoc, query, orderBy } from 'firebase/firestore';
 import { useCollection } from 'vuefire';
 
+import { useFirestore } from 'vuefire'
+const db = useFirestore()
 
-
-let recordatoriosRef = useCollection(
-  query(collection(Recordatorios), orderBy("nombre"))
-);
+const recordatoriosRef = useCollection(collection(db, 'Recordatorios'))
 
 function recepcionNota(texto) {
   const nuevaTarea = {
@@ -42,9 +41,9 @@ function eliminarTarea(pos) {
 <template>
   <Login></Login>
   <Cabecera v-on:keydown.enter="recepcionNota()">  </Cabecera>
-  <resumenTareas :tareaspendientes="Recordatorios.filter((tarea) => !tarea.acabada).length"></resumenTareas>
+  <!-- <resumenTareas :tareaspendientes="Recordatorios.filter((tarea) => !tarea.acabada).length"></resumenTareas> -->
   <tarea v-for="tarea in Recordatorios" :titulo="tarea.nombre"></tarea>
-  <ListaTareas><ol> <li v-for="(nombre,index) in Recordatorios"> {{ nombre }} <button v-on:click="eliminarTarea(index)"></button></li> </ol></ListaTareas>
+    <ol> <li v-for="(nombre,index) in recordatoriosRef"> {{ nombre }} <button v-on:click="eliminarTarea(index)"></button></li> </ol>
   <Pie></Pie>
 </template>
 
