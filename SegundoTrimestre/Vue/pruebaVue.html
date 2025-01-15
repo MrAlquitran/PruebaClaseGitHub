@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <div id="app">
+        <h1> primer vue
+            {{ message }}
+            {{titulo}}
+            {{edad}}
+        </h1>
+
+        <button v-on:click="botonpulsado">Añadir evento</button>
+        <p v-if="mostrarEdad">
+            La edad que tiene es {{edad}}
+        </p>
+        <p v-else>
+            No se
+        </p>
+
+        {{contenidoInput}}<br>
+        <input type="text" v-model="contenidoInput">
+        <ol>
+            <li v-for="(nombre,index) in Nombres" v-on:click="borrarElemento(index)"> {{nombre}}</li>
+        </ol>
+
+        <ol>
+            <li v-for="dato in datos">
+                {{dato.edad1}}
+                {{dato.nombre}}
+                {{dato.apellidos}}
+            </li>
+        </ol>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
