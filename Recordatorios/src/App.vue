@@ -1,55 +1,81 @@
 <script setup>
-import Cabecera from './components/Cabecera.vue';
-import Pie from './components/Pie.vue';
-import ListaTareas from './components/ListaTareas.vue';
-import tarea from './components/tarea.vue';
-import resumenTareas from './components/resumenTareas.vue';
+import { useRouter } from 'vue-router';
+import { getCurrentUser, useCurrentUser } from 'vuefire';
 import Login from './components/Login.vue';
-//VARIABLE DE FIREBASE.JS ES EL DB, "RECORDATORIOS"
-import { collection } from 'firebase/firestore'
+const router = useRouter();
 
-import { addDoc, query, orderBy } from 'firebase/firestore';
-import { useCollection } from 'vuefire';
-
-import { useFirestore } from 'vuefire'
-const db = useFirestore()
-
-const recordatoriosRef = useCollection(collection(db, 'Recordatorios'))
-
-function recepcionNota(texto) {
-  const nuevaTarea = {
-    nombre: texto || "Sin título",
-    prioridad: "normal",
-    fechacreacion: new Date().toISOString(),
-    completado: false,
-  };
-
-  addDoc(collection(Recordatorios), nuevaTarea)
-    .then((docRef) => {
-      console.log("Documento escrito con ID", docRef.id);
-    })
-    .catch((error) => {
-      console.log("ERROR= " + error);
-    });
-}
-
-function eliminarTarea(pos) {
-  recordatoriosRef.value.splice(pos, 1);
-}
+router.beforeEach(async(to, from)=>{
+  console.log("salta")
+  if(to.meta.requiresAuth){
+    const user = await getCurrentUser()
+    if(!user){
+      return false;
+    }else{
+      return true;
+    }
+  } else{
+    return true
+  }
+})
 </script>
 
 <template>
-  <Login></Login>
-  <Cabecera v-on:keydown.enter="recepcionNota()">  </Cabecera>
-  <!-- <resumenTareas :tareaspendientes="Recordatorios.filter((tarea) => !tarea.acabada).length"></resumenTareas> -->
-  <tarea v-for="tarea in Recordatorios" :titulo="tarea.nombre"></tarea>
-    <ol> <li v-for="(nombre,index) in recordatoriosRef"> {{ nombre }} <button v-on:click="eliminarTarea(index)"></button></li> </ol>
-  <Pie></Pie>
+  <nav>
+    <div class="left-links">
+      <RouterLink to="/">Inicio</RouterLink>
+      <RouterLink to="/recordatorios">Recordatorios</RouterLink>
+    </div>
+    <div class="right-login">
+      <Login></Login>
+    </div>
+
+  </nav>
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden; 
+}
+
+nav {
+  position: fixed; 
+  top: 0; 
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  background-color: rgb(56, 178, 248);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  overflow: hidden; 
+}
+
+.left-links {
+  display: flex;
+  gap: 1rem; 
+  white-space: nowrap; 
+}
+
+.left-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.left-links a:hover {
+  color: yellow;
+  transition: 0.4s;
+}
+
+.right-login {
+  margin-left: auto;
 }
 
 .logo {
@@ -57,21 +83,18 @@ header {
   margin: 0 auto 2rem;
 }
 
+main {
+  margin-top: 5rem; 
+  padding: 1rem;
+}
+
 @media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  nav {
+    padding: 1rem 2rem;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  .left-links {
+    gap: 2rem;
   }
 }
 </style>

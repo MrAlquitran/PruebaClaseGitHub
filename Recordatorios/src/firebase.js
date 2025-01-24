@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore, collection } from 'firebase/firestore'
+import { getAuth, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 // ... other firebase imports
 
 export const firebaseApp = initializeApp({
@@ -10,6 +11,11 @@ export const firebaseApp = initializeApp({
         messagingSenderId: "720871472358",
         appId: "1:720871472358:web:f94feccd808513bd4c4f27"
 })
+
+const auth = getAuth(firebaseApp);
+const provider = new GithubAuthProvider();
+
+export { auth, provider };
 
 // used for the firestore refs
 const db = getFirestore(firebaseApp)
