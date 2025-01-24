@@ -5,37 +5,37 @@ import './App.css'
 
 //Ejercicio1
 
-// function HelloWorld() {
-//   const Estilo = {
-//     width: '200px',
-//     height: '200px',
-//     backgroundColor: 'orange',
-//     display: 'flex',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     fontSize: '20px',
-//     fontWeight: 'bold'
-//   };
+function HelloWorld() {
+  const Estilo = {
+    width: '200px',
+    height: '200px',
+    backgroundColor: 'orange',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '20px',
+    fontWeight: 'bold'
+  };
 
-//   return (
-//     <div style={Estilo}>
-//       Hello, World!
-//     </div>
-//   );
-// }
+  return (
+    <div style={Estilo}>
+      Hello, World!
+    </div>
+  );
+}
 
-// function App() {
-//   let nuevodiv = <div>Hola!</div>
-//   return (
-//     <>
-//       {nuevodiv}
-//       <p>Pablo</p>
-//       <HelloWorld />
-//     </>
-//   );
-// }
+function App() {
+  let nuevodiv = <div>Hola!</div>
+  return (
+    <>
+      {nuevodiv}
+      <p>Pablo</p>
+      <HelloWorld />
+    </>
+  );
+}
 
-// export default App;
+export default App;
 
 // //Ejercicio2
 // function App() {
@@ -225,30 +225,30 @@ import './App.css'
 
 //Ejercicio 8
 
-function ListaChistes({ chistes }) {
-  return (
-    <div>
-      {chistes.map((chiste, index) => (
-        <div key={index}>
-          <h3>{chiste.inicio}</h3>
-          <p>{chiste.broma}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
+// function ListaChistes({ chistes }) {
+//   return (
+//     <div>
+//       {chistes.map((chiste, index) => (
+//         <div key={index}>
+//           <h3>{chiste.inicio}</h3>
+//           <p>{chiste.broma}</p>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
 
-function App() {
-  const chistes = [
-    { inicio: '¿Sabes la diferencia entre un aparato reproductor masculino y una silla?', broma: 'Ten cuidado donde te sientas...' },
-    { inicio: '¿Qué hace una abeja en el gimnasio?', broma: 'Zum-ba.' }
-  ];
+// function App() {
+//   const chistes = [
+//     { inicio: '¿Sabes la diferencia entre un aparato reproductor masculino y una silla?', broma: 'Ten cuidado donde te sientas...' },
+//     { inicio: '¿Qué hace una abeja en el gimnasio?', broma: 'Zum-ba.' }
+//   ];
 
-  return (
-    <>
-      <ListaChistes chistes={chistes} />
-    </>
-  );
-}
+//   return (
+//     <>
+//       <ListaChistes chistes={chistes} />
+//     </>
+//   );
+// }
 
-export default App;
+// export default App;
